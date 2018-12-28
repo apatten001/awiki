@@ -29,9 +29,10 @@ def add_article(request):
 
 @login_required
 def edit_article(request, slug):
-   """
-   allows a logged in user to edit an article
-   """
+    """
+       allows a logged in user to edit an article
+    """
+
     article = get_object_or_404(Article, slug=slug)
     form = ArticleForm(request.POST or None, instance=article)
     edit_form = EditArticleForm(request.POST or None)
@@ -45,7 +46,7 @@ def edit_article(request, slug):
             msg = 'Article was edited successfully.'
             messages.success(request, msg, fail_silently=True)
             return redirect(article)
-    return render(request, 'article/article_form.html', {'form': form, 'edit_form': edit_form})
+    return render(request, 'article/article_form.html', {'form': form, 'edit_form': edit_form, 'article': article})
 
 
 def article_history(request, slug):
@@ -55,7 +56,7 @@ def article_history(request, slug):
 
     article = get_object_or_404(Article, slug=slug)
     queryset = Edit.objects.filter(article__slug=slug)
-    return render(request, 'article/edit_list.html', {'article': article, 'queryset':queryset})
+    return render(request, 'article/edit_list.html', {'article': article, 'queryset': queryset})
 
 
 class ArticleList(ListView):
@@ -64,8 +65,7 @@ class ArticleList(ListView):
      """
     template_name = 'article/article_list.html'
 
-    def get_queryset(self):
-        Article.objects.all()
+    queryset = Article.objects.all()
 
 
 class ArticleDetail(DetailView):
@@ -74,9 +74,5 @@ class ArticleDetail(DetailView):
     """
     model = Article
     template_name = 'article/article_detail.html'
-
-
-
-
 
 
