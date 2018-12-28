@@ -1,0 +1,10 @@
+{% if object_list %}
+    <h2>Recent Articles</h2>
+    {% for article in object_list %}
+        <a href="{% url 'wiki_article_detail' article.slug %}"><h1>{{ article.title }}</h1></a>
+    {% endfor %}
+ {% else  %}
+    <h2>There are no published articles yet.</h2>
+{% endif %}
+
+<a href="{% url 'wiki_article_add' %}">Add article</a>

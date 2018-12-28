@@ -1,10 +1,15 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% if article %}
+    <h2>Edit Article {{ article }}</h2>
+    {% else %}
+    <h2>Create a new article</h2>
+{% endif %}
 
-</body>
-</html>
+<form action="" method="POST">
+    {% csrf_token %}
+    <table>
+    {{ form.as_table}}
+        {{ edit_form.as_p }}
+    </table>
+
+    <input type="submit" value="Submit", name="submit">
+</form>
